@@ -11,14 +11,16 @@ import matplotlib.pyplot as plt
 
 h=0
 j=-1
-beta = 10000
+beta = 1000
 
-s=100
+s=16
 n=s**2
 mag = []
 E_arr = []
+mag_arr = []
 mat = [[randrange(-1,2,2) for i in range(s)] for j in range(s)]
-for x in range(50):
+
+for x in range(100):
     for i in range(n):
         (sx, sy) = (randrange(s), randrange(s))
         de = (-h * -mat[sx][sy]) - (-h * mat[sx][sy])
@@ -38,7 +40,9 @@ for x in range(50):
     
     for i in range(s):
         for j in range(s):
+            
             mag_here += mat[i][j]
+            
             temp_E = 0
             if i-1 > -1:
                 temp_E += -j * mat[i-1][j] * mat[i][j]
@@ -50,7 +54,19 @@ for x in range(50):
                 temp_E += -j * mat[i][j+1] * mat[i][j]
             E_here += temp_E
     
-    E_arr += [E_here/(s**2)]
+    E_arr += [float(E_here)/(s**2)]
+    mag_arr += [float(mag_here)/(s**2)]
     
+    
+    print "step " + str(x) + " done!"
+
 plt.plot(E_arr)
-    
+plt.plot(mag_arr)   
+
+plt.figure(1)
+plt.subplot(211)
+plt.plot(E_arr, 'b')
+
+plt.subplot(212)
+plt.plot(mag_arr, 'r')
+plt.show()
